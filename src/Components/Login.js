@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
-import Header from './Header';
 import Home from './Home.css';
+import Modal from './Modal/Modal';
+import Signup from './Signup';
 
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -22,13 +22,13 @@ import {Link } from 'react-router-dom';
 
 const styles = theme => ({
   card: {
-  	maxWidth:500,
+  	maxWidth:550,
   	height:500,
     display:"flex",
     marginTop:100,
     marginLeft:450,
     paddingTop:'0%',
-
+    
   },
   
   avatar: {
@@ -53,6 +53,14 @@ const styles = theme => ({
   },
   form:{
   	marginLeft:20,
+  },
+  p:{
+  	color:'#161616',
+  	fontSize:16,
+  },
+  buttonn:{
+  	backgroundColor:'#fff',
+  	color:'#161616'
   }
 
 });
@@ -67,6 +75,17 @@ class Login extends Component{
 		
 	}
 }
+state = {
+    
+    showw:false
+  }
+
+   showModall = () => {
+    this.setState({
+      ...this.state,
+      showw: !this.state.showw
+    });
+}
 
  
 	render(){
@@ -74,14 +93,14 @@ class Login extends Component{
 
 		return(
 				<div>
-				<Header/>
+				
 					
 					<Card className={classes.card}>
 						<Avatar className={classes.avatar}>
 						L
 						</Avatar><br/>
 					
-							<h1 className={classes.h1}>Login<br/></h1><br/>
+							<h3 className={classes.h1}>Login<br/></h3><br/>
 
             			<form className={classes.form}>
 							<TextField
@@ -108,7 +127,7 @@ class Login extends Component{
 								}}
 					         	 value={this.state.Password}
 					         	 onChange={(e) =>this.onChangePassword(e)}
-					       			/><br/><br/>
+					       			/><br/>
 					   
 						            <FormControlLabel
 						            	control={
@@ -120,17 +139,22 @@ class Login extends Component{
 							         	 }
 							              label="Remember Me"
 						              /><br/>
-						              <Button variant="contained" className={classes.button}>
+						              <Button variant="flat" className={classes.button}>
         				Login
       					</Button>
-      					<p>Do not have an account?  | <Button component={Link} to="/Signup"className="button" >
+      					
+      					<p className={classes.p}>Do not have an account?|<Button variant="flat" onClick={this.showModall}className={classes.buttonn}>
+      					
         				Register Here..
       					</Button></p>
-					</form>		        
-
+      					</form>
+      					
+						       
 					</Card>
 
-					
+				<Modal onClose={this.showModall} show={this.state.showw}>
+					              <Signup/>
+					        </Modal>	
 				</div>
 	)}
 	onChangeUserName(e) {

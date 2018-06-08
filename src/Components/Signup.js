@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import Header from './Header';
+import Modal from './Modal/Modal';
+import Login from './Login';
 
 
 import Card from '@material-ui/core/Card';
@@ -18,12 +19,13 @@ import green from '@material-ui/core/colors/green';
 
 const styles = theme => ({
   card: {
-  	maxWidth:500,
-  	height:500,
+  	maxWidth:550,
+  	maxHeight:500,
     display:"flex",
     marginTop:100,
     marginLeft:450,
     paddingTop:'0%',
+    overflow:'scroll'
 
   },
   
@@ -54,10 +56,19 @@ const styles = theme => ({
   	buttonSize:100,
   	backgroundColor:green[300],
   },
+  p:{
+  	color:'#161616',
+  	fontSize:16,
+  },
+  buttonn:{
+  	backgroundColor:'#fff',
+  	color:'#161616'
+  }
 
 });
 
 class Signup extends Component{
+
 	constructor(props){
 		super(props)
 				this.state={
@@ -69,17 +80,25 @@ class Signup extends Component{
 				}
 		
 		}
+		state = {
+    		show: false,
+  }
+  		showModal = () => {
+    this.setState({
+      ...this.state,
+      show: !this.state.show
+    });
+}
 		
 render(){
 		const { classes } = this.props;
 
 		return(
 			<div>
-					<Header/>
-					<Card className={classes.card}>
-								
-									<h1 className={classes.h1}>Sign up<br/></h1><br/>
+				<Card className={classes.card}>	
+					<h3 className={classes.h1}>Signup</h3>
 									<CardContent>
+									
 
 		            			<form className={classes.form}>
 									<TextField
@@ -149,19 +168,21 @@ render(){
 									          }}
 									     value={this.state.password}
 								         onChange={(e) => this.change(e)}
-									/><br /><br/>
-
-								 </form><br/>
-								 <Button className={classes.button} onClick={()=>this.onSubmit()} >
-        				Create Account
-      					</Button><br/>
-      					<p>Already have an account?  | <Button component={Link} to="/Login"className="button" >
-        				Sign in
-      					</Button></p>
-
-      					</CardContent>
+									/><br />
+								<Button variant="flat" className={classes.button} onClick={()=>this.onSubmit()} >
+		        				Create Account
+		      					</Button>
+		      					</form>
+		      					<p className={classes.p}>Already have an account?|<Button variant="flat" className={classes.buttonn} onClick={this.showModal} >
+		        				Sign in
+		      					</Button></p>
+		      					
+		      			</CardContent>
       					
-			        </Card>
+			   </Card> 
+			   <Modal onClose={this.showModal} show={this.state.show}>
+		              <Login/>
+				</Modal>    
 			</div>
 			);
 	}
